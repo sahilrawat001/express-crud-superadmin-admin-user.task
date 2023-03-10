@@ -1,0 +1,35 @@
+[
+    {
+        "id": 3,
+        "name": "duumyperson1",
+        "mail": "dummyuser3@gmail.com",
+        "password": "ABCy124#000",
+        "role": "user",
+        "age": 24,
+        "permission": [
+            "get"
+        ]
+    },
+    {
+        "name": "duumyperson1",
+        "mail": "dummyuser156@gmail.com",
+        "password": "ABCy124#000000",
+        "role": "admin",
+        "age": 34,
+        "permission": [
+            "get"
+        ],
+        "id": 2
+    },
+    {
+        "id": 1,
+        "name": "duumyperson1",
+        "mail": "dummyuser1@gmail.com",
+        "password": "ABCy124#000$",
+        "role": "super",
+        "age": 34,
+        "permission": [
+            "all"
+        ]
+    }
+]
