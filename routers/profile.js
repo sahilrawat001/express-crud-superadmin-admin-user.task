@@ -13,8 +13,4 @@ router.route("/permission/:id").post(permissionValidation ,permitUser);
 
 
 
-
-
-
-
 module.exports = router;

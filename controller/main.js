@@ -2,7 +2,6 @@ let data = require("../database/user.json");
 
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
-// require("dotenv")
 const { newIndex } = require("./sidefunction");
 const { SignInError, invalidData } = require("../utils/messages");
 const secret = process.env.SECRET;
@@ -16,16 +15,8 @@ function dataPush(data) {
     fs.writeFileSync("./database/user.json", JSON.stringify(data), "utf-8");
 }
 
-
-
-
 let userMail = (mail) => data.find((i) => i.mail == mail);
 let userPassword = (password) => data.find((i) => i.password == password);
-
-
-
-
-
 
 const signUp = (req, res) => {
     //gets object from id
@@ -41,8 +32,7 @@ const signUp = (req, res) => {
         let token = jwt.sign({ data: req.body }, secret, { expiresIn: "1h" });
         let obj = new Object;
         obj.token = token;
-        tokenPush(obj)
-        // fspush(data);
+        tokenPush(data);
         dataPush(data);
         res.status(200).send({ token });
         
@@ -55,7 +45,8 @@ const signIn = (req, res) => {
 
     if (!checkEmail || !checkPassword) {
         res.status(400).send(SignInError);
-    } else {
+    } 
+    else {
         if (checkEmail.id != checkPassword.id) {
             console.log( invalidData);
             res.status(404).send( invalidData);

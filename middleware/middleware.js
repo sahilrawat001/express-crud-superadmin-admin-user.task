@@ -36,6 +36,7 @@ const profileUpdateValidate = (req, res, next) => {
         next();
     }
 };
+
 const permissionValidation = (req, res, next) => {
     const result = permitData.validate(req.body);
     if (result.error) {

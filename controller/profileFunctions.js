@@ -10,8 +10,6 @@ const secret = process.env.SECRET;
 let restData = (id) => data.filter((i) => i.id != id);
 let userData = (id) => data.find((i) => i.id == id);
 let roleData = (role) => data.filter((i) => i.role != role);
-
-// let userPassword = (password) => data.find((i) => i.password == password);
  
 function dataPush(data) {
     fs.writeFileSync("./database/user.json", JSON.stringify(data), "utf-8");
@@ -22,11 +20,9 @@ const { authenticateTokenError, passwordError, invalidData, permissionGrant ,per
 
 let checkUser = (token) => {
     if (userToken.token === token) {
-        console.log("truee");
         return true;
     }
     else {
-        console.log("falsee");
         return false;
     }
 };
@@ -56,51 +52,61 @@ const profileUpdate = (req, res) => {
 }; 
 
 const resetPass = (req, res) => {
-    if (checkUser(req.headers.token)) {
+    if (checkUser(req.headers.token)) 
+    {
         const token = jwt.verify(userToken.token, secret);
         const id = token.data.id;
         let dataOfUser = userData(id);
         let restOfData = restData(id);
-        if (req.body.password == dataOfUser.password) {
+        if (req.body.password == dataOfUser.password) 
+        {
             dataOfUser.password = req.body.newPassword;
             restOfData.push(dataOfUser);
             dataPush(restOfData);
             res.send(dataOfUser);
 
         }
-        else {
+        else 
+        {
             res.status(400).send(passwordError);
         }
 
     }
-    else {
+    else 
+    {
         res.status(400).send(authenticateTokenError);
     }
 };
 
 const getUsers = (req, res) => {
-    if (checkUser(req.headers.token)) {
+    if (checkUser(req.headers.token)) 
+    {
         const token = jwt.verify(userToken.token, secret);
         const id = token.data.id;
         const dataOfUser = userData(id);
-        if (dataOfUser.role == "super") {
+        if (dataOfUser.role == "super") 
+        {
             const requiredData = roleData(dataOfUser.role);
             res.send(requiredData);
         }
-        else if (dataOfUser.role == "admin" && dataOfUser.permission.includes("get") ) {
+        else if (dataOfUser.role == "admin" && dataOfUser.permission.includes("get") ) 
+        {
             const requiredData = roleData("user");
             res.send(requiredData);
         }
-        else if (dataOfUser.role == "user"  ) {
+        else if (dataOfUser.role == "user"  ) 
+        {
             res.send(dataOfUser);
         }
-        else {
+        else 
+        {
             res.status(400).send("can't get data");
         }
 
 
     }
-    else {
+    else 
+    {
         res.status(400).send(authenticateTokenError);
     }
 
@@ -111,21 +117,26 @@ const updateUser = (req, res) => {
         const token = jwt.verify(userToken.token, secret);
         const id = token.data.id;
         const dataOfUser = userData(id);
-        if (dataOfUser.role == "super") {
+        if (dataOfUser.role == "super") 
+        {
             const requiredData = userData(req.params.id);
             console.log(requiredData.role,"--");
-            if (!requiredData || requiredData.role == "super") {
+            if (!requiredData || requiredData.role == "super") 
+            {
                 res.status(404).send(invalidData);
             }
             else {
                 let restOfData = restData(req.params.id);
-                if (req.body.name) {
+                if (req.body.name) 
+                {
                     requiredData.name = req.body.name;
                 }
-                if (req.body.password) {
+                if (req.body.password) 
+                {
                     requiredData.password = req.body.password;
                 }
-                if (req.body.age) {
+                if (req.body.age) 
+                {
                     requiredData.age = req.body.age;
                 }
                 restOfData.push(requiredData);
@@ -133,12 +144,15 @@ const updateUser = (req, res) => {
                 res.send(requiredData); 
             }
         }
-        else if (dataOfUser.role == "admin" && dataOfUser.permission.includes("update")) {
+        else if (dataOfUser.role == "admin" && dataOfUser.permission.includes("update")) 
+        {
             const requiredData = userData(req.params.id);
-            if (!requiredData || requiredData.role == "super" || requiredData.role == "admin") {
+            if (!requiredData || requiredData.role == "super" || requiredData.role == "admin") 
+            {
                 res.status(404).send(invalidData);
             }
-            else {
+            else 
+            {
                 let restOfData = restData(req.params.id);
                 if (req.body.name) {
                     requiredData.name = req.body.name;

@@ -1,7 +1,6 @@
 const Joi = require("joi");
 
 
-
 const signup = Joi.object().keys({
     name: Joi.string().min(4).required(),
     mail: Joi.string().email({ tlds: { allow: ["com", "in", "net"] } }).lowercase().required(),
@@ -36,7 +35,6 @@ const updateData = Joi.object().keys({
 const permitData = Joi.object().keys({
     permission: Joi.string().required(),
 });
-
 
 
 module.exports = { signin, signup, updateData, resetPassword,permitData };
